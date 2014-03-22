@@ -93,6 +93,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="BasicReactive.cs" />
     <Compile Include="BasicRoslyn.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -11,7 +11,7 @@ namespace RoslynRx.Tests
     public class BasicRoslyn
     {
         [TestMethod]
-        public void HelloWorld()
+        public void RoslynPrintsHelloWorld()
         {
             var sb = new StringBuilder();
             var writer = new StringWriter(sb);
