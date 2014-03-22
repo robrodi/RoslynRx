@@ -16,7 +16,7 @@ namespace RoslynRx.Tests
             var sb = new StringBuilder();
             var writer = new StringWriter(sb);
             Console.SetOut(writer);
-            string expected = "Hello World!  I'm Roslyn!";
+            const string expected = "Hello World!  I'm Roslyn!";
 
             StupidExecute(string.Format("System.Console.WriteLine(\"{0}\");", expected));
             sb.ToString().Should().Be(expected + Environment.NewLine);
