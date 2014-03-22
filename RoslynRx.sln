@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoslynRx", "RoslynRx.csproj", "{55E7BFA0-B322-42BC-B3EE-64C20BE2BEB6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoslynRx", "RoslynRx\RoslynRx.csproj", "{55E7BFA0-B322-42BC-B3EE-64C20BE2BEB6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoslynRx.Tests", "..\RoslynRx.Tests\RoslynRx.Tests.csproj", "{B09DA562-0B5D-4FC4-A63F-B4672D024B7F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoslynRx.Tests", "RoslynRx.Tests\RoslynRx.Tests.csproj", "{B09DA562-0B5D-4FC4-A63F-B4672D024B7F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{9041C6F3-0975-40D2-82E3-6AE5461439CB}"
 	ProjectSection(SolutionItems) = preProject
@@ -16,7 +16,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{9041C6
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{99553BB1-A096-4C73-868E-744F83E0DDDE}"
 	ProjectSection(SolutionItems) = preProject
-		..\Readme.md = ..\Readme.md
+		Readme.md = Readme.md
 	EndProjectSection
 EndProject
 Global
