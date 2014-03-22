@@ -18,11 +18,11 @@ namespace RoslynRx.Tests
             Console.SetOut(writer);
             const string expected = "Hello World!  I'm Roslyn!";
 
-            StupidExecute(string.Format("System.Console.WriteLine(\"{0}\");", expected));
+            Execute(string.Format("System.Console.WriteLine(\"{0}\");", expected));
             sb.ToString().Should().Be(expected + Environment.NewLine);
         }
 
-        private static void StupidExecute(string code)
+        private static void Execute(string code)
         {
             new ScriptEngine().CreateSession().Execute(code);
         }
