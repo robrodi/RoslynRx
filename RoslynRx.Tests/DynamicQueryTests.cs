@@ -35,6 +35,19 @@ namespace RoslynRx.Tests
         }
 
         [TestMethod]
+        public void CompoundWhere()
+        {
+            var filter = new Filter<Event<long>>("@event => @event.Type == 1L && @event.Data > 30 && @event != null && @event.Data != 203123123");
+
+            var testInterval = new TestInterval();
+
+            int count = 0;
+            testInterval.Interval.DoThing(filter).Count().Subscribe(i => count = i);
+            testInterval.Start();
+            count.Should().Be((testInterval.ExpectedCount - 30) / testInterval.NumberOfTypes);
+        }
+
+        [TestMethod]
         public void Sum()
         {
             // NOTE: fully qualifying the type name matters.  If this were a real thing, you could put in default namespaces.
@@ -45,6 +58,18 @@ namespace RoslynRx.Tests
             testInterval.Interval.DoThing(summer).Subscribe(i => sum = i.Data);
             testInterval.Start();
             sum.Should().Be(1770);
+        }
+
+        [TestMethod]
+        public void GroupBy()
+        {
+            Assert.Inconclusive("NYI");
+        }
+
+        [TestMethod]
+        public void LargerScript()
+        {
+            Assert.Inconclusive("NYI");
         }
     }
 }
