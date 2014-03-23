@@ -1,5 +1,4 @@
 using System;
-using System.Globalization;
 using System.Reactive.Linq;
 
 namespace RoslynRx
@@ -7,7 +6,10 @@ namespace RoslynRx
     /// <summary>
     /// Basically an aggregator generator.
     /// </summary>
-    /// <typeparam name="TEvent"></typeparam>
+    /// <example>
+    /// var summer = new Scan&lt;Event&lt;long&gt;&gt;("(sum, @event) =&gt; new RoslynRx.Tests.Event&lt;long&gt;(0, sum.Data + @event.Data)");
+    /// </example>
+    /// <typeparam name="TEvent">The type of event</typeparam>
     public class Scan<TEvent> : Predicate<TEvent>
     {
         private Func<IObservable<TEvent>, IObservable<TEvent>> result;

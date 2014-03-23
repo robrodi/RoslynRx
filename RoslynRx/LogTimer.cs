@@ -3,6 +3,9 @@ using NLog;
 
 namespace RoslynRx
 {
+    /// <summary>
+    /// Some nLog hackiness.
+    /// </summary>
     public class LogTimer : IDisposable
     {
         private string message;

@@ -6,6 +6,9 @@ namespace RoslynRx
     /// <summary>
     /// More or less a where clause generator.
     /// </summary>
+    /// <example>
+    /// var filter = new Filter&lt;Event&lt;long&gt;&gt;("@event =&gt; @event.Type == 1L && @event.Data &gt; 30 && @event != null && @event.Data != 203123123");
+    /// </example>
     /// <typeparam name="TEvent">The type of the thing.</typeparam>
     public class Filter<TEvent> : Predicate<TEvent>
     {

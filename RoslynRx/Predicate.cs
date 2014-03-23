@@ -8,7 +8,7 @@ namespace RoslynRx
     /// <summary>
     /// To be used as the base chaining operation on the <see cref="IObservable{T}"/>
     /// </summary>
-    /// <typeparam name="TEvent"></typeparam>
+    /// <typeparam name="TEvent">The type of event</typeparam>
     public abstract class Predicate<TEvent>
     {
         protected static Logger Log = LogManager.GetCurrentClassLogger();

@@ -6,6 +6,21 @@ using NLog;
 
 namespace RoslynRx
 {
+    /// <summary>
+    /// Demultiplexes a collection of events into a number of <see cref="IObservable{T}"/>s.
+    /// </summary>
+    /// <example>
+    ///     var knownTypes = new[] { 1, 2 };
+    ///     var dm = new Demuxer&lt;int, Event&lt;long&gt;&gt;(knownTypes, "@event =&gt; @event.Type");
+    ///     var testInterval = new TestInterval(100, 5);
+    ///     testInterval.Interval.Subscribe(dm);
+    ///     foreach (var type in knownTypes{
+    ///     {
+    ///         dm.Streams[type].Count().Subscribe(...);
+    ///     }
+    /// </example>
+    /// <typeparam name="TKey">The type of the key to use, each of which have an entry in <see cref="Streams"/>.</typeparam>
+    /// <typeparam name="TEvent">The type of event to pass through.</typeparam>
     public class Demuxer<TKey, TEvent> : IObserver<TEvent>
     {
         private static Logger Log = LogManager.GetCurrentClassLogger();
