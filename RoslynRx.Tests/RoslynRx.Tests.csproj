@@ -96,6 +96,8 @@
     <Compile Include="BasicReactive.cs" />
     <Compile Include="BasicRoslyn.cs" />
     <Compile Include="BasicRoslynRx.cs" />
+    <Compile Include="Event.cs" />
+    <Compile Include="EventBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
