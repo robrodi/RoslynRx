@@ -27,7 +27,7 @@ namespace RoslynRx
             try
             {
                 Log.Info("Compiling Query: {0}", query);
-                using (new LogTimer("Compliation", Log))
+                using (new LogTimer("Compilation", Log))
                 {
                     keySelector = session.Execute<Func<TEvent, TKey>>(query);
                 }

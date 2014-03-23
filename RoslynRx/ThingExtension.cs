@@ -2,7 +2,7 @@ using System;
 
 namespace RoslynRx
 {
-    public static class ThingExension
+    public static class ThingExtension
     {
         public static IObservable<TEvent> DoThing<TEvent>(this IObservable<TEvent> stream, Predicate<TEvent> predicate)
         {

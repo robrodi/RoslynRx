@@ -1,4 +1,5 @@
 using System;
+using System.Globalization;
 using System.Reactive.Linq;
 
 namespace RoslynRx
@@ -18,14 +19,14 @@ namespace RoslynRx
             try
             {
                 Log.Info("Compiling Query: {0}", query);
-                using (new LogTimer("Compliation", Log))
+                using (new LogTimer("Compilation", Log))
                 {
                     result = input => input.Scan(session.Execute<Func<TEvent, TEvent, TEvent>>(query));
                 }
             }
             catch (Exception ex)
             {
-                Log.ErrorException(string.Format("Failed to compile query {0}", query), ex);
+                Log.Error("Failed to compile query {0}. {1}", query, ex);
                 throw;
             }
         }

@@ -19,7 +19,7 @@ namespace RoslynRx
             try
             {
                 Log.Info("Compiling Query: {0}", query);
-                using (new LogTimer("Compliation", Log))
+                using (new LogTimer("Compilation", Log))
                 {
                     result = input => input.Aggregate(session.Execute<Func<TEvent, TEvent, TEvent>>(query));
                 }

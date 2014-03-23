@@ -18,7 +18,7 @@ namespace RoslynRx
             try
             {
                 Log.Info("Compiling Query: {0}", query);
-                using (new LogTimer("Compliation", Log))
+                using (new LogTimer("Compilation", Log))
                 {
                     predicate = input => input.Where(session.Execute<Func<TEvent, bool>>(query));
                 }
