@@ -87,20 +87,23 @@ namespace RoslynRx.Tests
         {
             var knownTypes = new[] { 1, 2 };
             var dm = new Demuxer<int, Event<long>>(knownTypes, "@event => @event.Type");
-            foreach (var knownType in knownTypes)
-                dm[knownType].Should().NotBeNull();
+            foreach (var stream in dm.Streams)
+                stream.Should().NotBeNull();
             var testInterval = new TestInterval(100, 5);
             testInterval.Interval.Subscribe(dm);
 
-            int knownType1 = 0, knownType2 = 0;
+            var expected = new[] {20L, 20L};
+            var results = new long[2];
 
-            dm[1].Count().Subscribe(i => knownType1 = i);
-            dm[2].Count().Subscribe(i => knownType2 = i);
-
+            for (int index = 0; index < knownTypes.Length; index++)
+            {
+                var x = index;
+                dm.Streams[knownTypes[index]].Count().Subscribe(i => results[x] = i);
+            }
+            
             testInterval.Start();
+            results.ShouldAllBeEquivalentTo(expected);
 
-            knownType1.Should().Be(20);
-            knownType2.Should().Be(20);
         }
 
         [TestMethod]

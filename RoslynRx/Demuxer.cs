@@ -10,21 +10,15 @@ namespace RoslynRx
     {
         private static Logger Log = LogManager.GetCurrentClassLogger();
         private readonly Func<TEvent, TKey> keySelector;
-        private readonly IDictionary<TKey, Subject<TEvent>> streams;
-
-        public IObservable<TEvent> this[TKey key]
-        {
-            get
-            {
-                return streams[key];
-            }
-        }
+        private readonly IDictionary<TKey, Subject<TEvent>> subjects;
+        public IDictionary<TKey, IObservable<TEvent>> Streams { get; private set; }
 
         public IEnumerable<TKey> KnownKeys { get; private set; }
 
         public Demuxer(IEnumerable<TKey> keys, string query)
         {
-            streams = keys.ToDictionary(key => key, key => new Subject<TEvent>());
+            subjects = keys.ToDictionary(key => key, key => new Subject<TEvent>());
+            Streams = subjects.ToDictionary(entry => entry.Key, entry => (IObservable<TEvent>) entry.Value);
             KnownKeys = keys;
 
             var session = Predicate<TEvent>.CreateSession();
@@ -55,7 +49,7 @@ namespace RoslynRx
             var key = keySelector(value);
             if (KnownKeys.Contains(key))
             {
-                streams[key].OnNext(value);
+                subjects[key].OnNext(value);
             }
             else
                 Log.Trace("Uknown Key: {0}", key);
@@ -68,7 +62,7 @@ namespace RoslynRx
 
         public void OnCompleted()
         {
-            foreach (var subject in streams)
+            foreach (var subject in subjects)
                 subject.Value.OnCompleted();
         }
     }
