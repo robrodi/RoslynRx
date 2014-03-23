@@ -23,14 +23,37 @@ namespace RoslynRx.Tests
 
             var interval = Observable.Interval(TimeSpan.FromSeconds(1), scheduler).Take(expectedCount).Select(i => new Event<long>((int)i % numberOfTypes, i));
 
-            Func<EventBase, bool> x = e => e.Type == 1;
+            var query = new QueryState<EventBase>();
 
-            var session = new ScriptEngine().CreateSession(this);
+            var session = new ScriptEngine().CreateSession(query);
             session.AddReference(this.GetType().Assembly);
-            session.Execute("filter = e => e.Type == 1;");
+            session.Execute("Filters.Add(@event => @event.Type == 1);");
 
             int count = 0;
-            interval.Where(filter).Count().Subscribe(i => count = i);
+            interval.WhereEach(query.Filters).Count().Subscribe(i => count = i);
+            scheduler.Start();
+            count.Should().Be(expectedCount / numberOfTypes);
+        }
+
+        [TestMethod]
+        public void MostBasic_Count_100x()
+        {
+            // Where type = 1
+
+            var scheduler = new TestScheduler();
+            const int expectedCount = 60;
+            const int numberOfTypes = 2;
+
+            var interval = Observable.Interval(TimeSpan.FromSeconds(1), scheduler).Take(expectedCount).Select(i => new Event<long>((int)i % numberOfTypes, i));
+
+            var query = new QueryState<EventBase>();
+
+            var session = new ScriptEngine().CreateSession(query);
+            session.AddReference(this.GetType().Assembly);
+            session.Execute("Filters.Add(@event => @event.Type == 1);");
+
+            int count = 0;
+            interval.WhereEach(query.Filters).Count().Subscribe(i => count = i);
             scheduler.Start();
             count.Should().Be(expectedCount / numberOfTypes);
         }

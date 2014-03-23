@@ -99,6 +99,8 @@
     <Compile Include="Event.cs" />
     <Compile Include="EventBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QueryState.cs" />
+    <Compile Include="RxEx.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
