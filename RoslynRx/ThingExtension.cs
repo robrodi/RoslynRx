@@ -14,7 +14,7 @@ namespace RoslynRx
         /// <param name="stream">the stream</param>
         /// <param name="predicate">the predicate</param>
         /// <returns>The resulting stream</returns>
-        public static IObservable<TEvent> DoThing<TEvent>(this IObservable<TEvent> stream, Predicate<TEvent> predicate)
+        public static IObservable<TEvent> Link<TEvent>(this IObservable<TEvent> stream, Predicate<TEvent> predicate)
         {
             if (stream == null) throw new ArgumentNullException("stream");
             if (predicate == null) return stream;

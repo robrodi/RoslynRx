@@ -30,7 +30,7 @@ namespace RoslynRx.Tests
 
             int count = 0;
             
-            testInterval.Interval.DoThing(filter).Count().Subscribe(i => count = i);
+            testInterval.Interval.Link(filter).Count().Subscribe(i => count = i);
             testInterval.Start();
             count.Should().Be(testInterval.ExpectedCount / testInterval.NumberOfTypes);
         }
@@ -43,7 +43,7 @@ namespace RoslynRx.Tests
             var testInterval = new TestInterval();
 
             int count = 0;
-            testInterval.Interval.DoThing(filter).Count().Subscribe(i => count = i);
+            testInterval.Interval.Link(filter).Count().Subscribe(i => count = i);
             testInterval.Start();
             count.Should().Be((testInterval.ExpectedCount - 30) / testInterval.NumberOfTypes);
         }
@@ -56,7 +56,7 @@ namespace RoslynRx.Tests
             var testInterval = new TestInterval();
             long sum = long.MinValue;
 
-            testInterval.Interval.DoThing(summer).Subscribe(i => sum = i.Data);
+            testInterval.Interval.Link(summer).Subscribe(i => sum = i.Data);
             testInterval.Start();
             sum.Should().Be(1770);
         }
@@ -69,7 +69,7 @@ namespace RoslynRx.Tests
             var testInterval = new TestInterval();
             long sum = long.MinValue;
 
-            testInterval.Interval.DoThing(summer).Subscribe(i => { sum = i.Data; Console.WriteLine(i.Data); });
+            testInterval.Interval.Link(summer).Subscribe(i => { sum = i.Data; Console.WriteLine(i.Data); });
             var oldSum = 0L;
             for (int i = 0; i < testInterval.ExpectedCount; i++)
             {
