@@ -83,6 +83,27 @@ namespace RoslynRx.Tests
         }
 
         [TestMethod]
+        public void Demux()
+        {
+            var knownTypes = new[] { 1, 2 };
+            var dm = new Demuxer<int, Event<long>>(knownTypes, "@event => @event.Type");
+            foreach (var knownType in knownTypes)
+                dm[knownType].Should().NotBeNull();
+            var testInterval = new TestInterval(100, 5);
+            testInterval.Interval.Subscribe(dm);
+
+            int knownType1 = 0, knownType2 = 0;
+
+            dm[1].Count().Subscribe(i => knownType1 = i);
+            dm[2].Count().Subscribe(i => knownType2 = i);
+
+            testInterval.Start();
+
+            knownType1.Should().Be(20);
+            knownType2.Should().Be(20);
+        }
+
+        [TestMethod]
         public void GroupBy()
         {
             Assert.Inconclusive("NYI");
