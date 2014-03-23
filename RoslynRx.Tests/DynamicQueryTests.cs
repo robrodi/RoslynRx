@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Reactive.Linq;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -33,6 +32,18 @@ namespace RoslynRx.Tests
             testInterval.Interval.DoThing(filter).Count().Subscribe(i => count = i);
             testInterval.Start();
             count.Should().Be(testInterval.ExpectedCount / testInterval.NumberOfTypes);
+        }
+
+        [TestMethod]
+        public void Sum()
+        {
+            // NOTE: fully qualifying the type name matters.  If this were a real thing, you could put in default namespaces.
+            var summer = new Aggregate<Event<long>>("(sum, @event) => new RoslynRx.Tests.Event<long>(0, sum.Data + @event.Data)");
+            var testInterval = new TestInterval();
+            long sum = long.MinValue;
+            testInterval.Interval.DoThing(summer).Subscribe(i => sum = i.Data);
+            testInterval.Start();
+            sum.Should().Be(1770);
         }
     }
 }

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Reactive.Linq;
 using FluentAssertions;
-using Microsoft.Reactive.Testing;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Roslyn.Scripting;
 using Roslyn.Scripting.CSharp;
@@ -11,7 +10,7 @@ namespace RoslynRx.Tests
     [TestClass]
     public class BasicRoslynRx
     {
-        public Func<EventBase, bool> filter;
+        public Func<EventBase, bool> Filter;
 
         [TestMethod]
         public void MostBasic_Count()
@@ -48,7 +47,6 @@ namespace RoslynRx.Tests
         {
             var session = new ScriptEngine().CreateSession();
             Type generic = typeof (Func<,>);
-            var genericType = generic.MakeGenericType(typeof (EventBase), typeof (bool));
             session.AddReference(generic.Assembly);
             session.AddReference(typeof(EventBase).Assembly);
             var actual = session.Execute<Func<EventBase, bool>>("@event => @event.Type == 1");

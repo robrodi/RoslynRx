@@ -32,5 +32,25 @@ namespace RoslynRx.Tests
             testInterval.Start();
             count.Should().Be(testInterval.ExpectedCount / testInterval.NumberOfTypes);
         }
+
+        [TestMethod]
+        public void Max()
+        {
+            var testInterval = new TestInterval();
+            long max = long.MinValue;
+            testInterval.Interval.Max(e => e.Data).Subscribe(i => max = i);
+            testInterval.Start();
+            max.Should().Be(testInterval.ExpectedCount - 1);
+        }
+
+        [TestMethod]
+        public void Sum()
+        {
+            var testInterval = new TestInterval();
+            long max = long.MinValue;
+            testInterval.Interval.Aggregate((sum, @event) => new Event<long>(0, sum.Data + @event.Data)).Subscribe(i => max = i.Data);
+            testInterval.Start();
+            max.Should().Be(1770);
+        }
     }
 }
