@@ -36,6 +36,16 @@ namespace RoslynRx.Tests
         }
 
         [TestMethod]
+        public void Compiler_SystemType()
+        {
+            var session = new ScriptEngine().CreateSession();
+            session.AddReference(typeof (QueryState<EventBase>).Assembly);
+            session.AddReference(typeof(Func<int, bool>).Assembly);
+            var actual = session.Execute<Func<int, bool>>("i => i == 1");
+            actual.Should().NotBeNull("null compilation");
+        }
+
+        [TestMethod]
         public void MostBasic_Count_100x()
         {
             // Where type = 1
