@@ -77,8 +77,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Filter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QueryState.cs" />
+    <Compile Include="Thing.cs" />
+    <Compile Include="ThingExension.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="NLog.config">

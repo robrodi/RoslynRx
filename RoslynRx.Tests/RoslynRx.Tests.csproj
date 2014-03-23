@@ -96,10 +96,12 @@
     <Compile Include="BasicReactive.cs" />
     <Compile Include="BasicRoslyn.cs" />
     <Compile Include="BasicRoslynRx.cs" />
+    <Compile Include="DynamicQueryTests.cs" />
     <Compile Include="Event.cs" />
     <Compile Include="EventBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RxEx.cs" />
+    <Compile Include="TestInterval.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

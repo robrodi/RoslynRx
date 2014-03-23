@@ -25,16 +25,12 @@ namespace RoslynRx.Tests
         [TestMethod]
         public void Count()
         {
-            var scheduler = new TestScheduler();
-            const int expectedCount = 60;
-            const int numberOfTypes = 2;
+            var testInterval = new TestInterval();
 
-            var interval = Observable.Interval(TimeSpan.FromSeconds(1), scheduler).Take(expectedCount).Select(i => new Event<long>((int)i % numberOfTypes, i));
-            
             int count = 0;
-            interval.Where(e => e.Type == 0).Count().Subscribe(i => count = i);
-            scheduler.Start();
-            count.Should().Be(expectedCount / numberOfTypes);
+            testInterval.Interval.Where(e => e.Type == 0).Count().Subscribe(i => count = i);
+            testInterval.Start();
+            count.Should().Be(testInterval.ExpectedCount / testInterval.NumberOfTypes);
         }
     }
 }

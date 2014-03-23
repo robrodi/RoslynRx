@@ -18,11 +18,7 @@ namespace RoslynRx.Tests
         {
             // Where type = 1
 
-            var scheduler = new TestScheduler();
-            const int expectedCount = 60;
-            const int numberOfTypes = 2;
-
-            var interval = Observable.Interval(TimeSpan.FromSeconds(1), scheduler).Take(expectedCount).Select(i => new Event<long>((int)i % numberOfTypes, i));
+            var testInterval = new TestInterval();
 
             var query = new QueryState<EventBase>();
 
@@ -30,9 +26,9 @@ namespace RoslynRx.Tests
             session.Execute("Filters.Add(@event => @event.Type == 1);");
 
             int count = 0;
-            interval.WhereEach(query.Filters).Count().Subscribe(i => count = i);
-            scheduler.Start();
-            count.Should().Be(expectedCount / numberOfTypes);
+            testInterval.Interval.WhereEach(query.Filters).Count().Subscribe(i => count = i);
+            testInterval.Start();
+            count.Should().Be(testInterval.ExpectedCount / testInterval.NumberOfTypes);
         }
 
         [TestMethod]
@@ -55,7 +51,6 @@ namespace RoslynRx.Tests
             var genericType = generic.MakeGenericType(typeof (EventBase), typeof (bool));
             session.AddReference(generic.Assembly);
             session.AddReference(typeof(EventBase).Assembly);
-            session.AddReference(genericType.Assembly);
             var actual = session.Execute<Func<EventBase, bool>>("@event => @event.Type == 1");
             actual.Should().NotBeNull("null compilation");
             actual.Invoke(new Event<int>(1, 1)).Should().BeTrue();
@@ -67,11 +62,7 @@ namespace RoslynRx.Tests
         {
             // Where type = 1
 
-            var scheduler = new TestScheduler();
-            const int expectedCount = 60;
-            const int numberOfTypes = 2;
-
-            var interval = Observable.Interval(TimeSpan.FromSeconds(1), scheduler).Take(expectedCount).Select(i => new Event<long>((int)i % numberOfTypes, i));
+            var testInterval = new TestInterval();
 
             var query = new QueryState<EventBase>();
 
@@ -79,9 +70,9 @@ namespace RoslynRx.Tests
             session.Execute("Filters.Add(@event => @event.Type == 1);");
 
             int count = 0;
-            interval.WhereEach(query.Filters).Count().Subscribe(i => count = i);
-            scheduler.Start();
-            count.Should().Be(expectedCount / numberOfTypes);
+            testInterval.Interval.WhereEach(query.Filters).Count().Subscribe(i => count = i);
+            testInterval.Start();
+            count.Should().Be(testInterval.ExpectedCount / testInterval.NumberOfTypes);
         }
 
         private Session ConfigureSession(QueryState<EventBase> query)

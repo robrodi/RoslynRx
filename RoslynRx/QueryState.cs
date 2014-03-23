@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.Reactive.Linq;
-using Roslyn.Scripting.CSharp;
+using NLog;
 
 namespace RoslynRx
 {
@@ -15,36 +14,22 @@ namespace RoslynRx
         }
     }
 
-    /// <summary>
-    /// To be used as the base chaining operation on the <see cref="IObservable{T}"/>
-    /// </summary>
-    /// <typeparam name="TEvent"></typeparam>
-    public abstract class Thing<TEvent>
+    public class LogTimer : IDisposable
     {
-        public string Query { get; protected set; }
-        public abstract Func<IObservable<TEvent>, IObservable<TEvent>> GetAction();
+        private string message;
+        private Logger log;
+        private DateTime start = DateTime.UtcNow;
 
-    }
-
-    public class Filter<TEvent> : Thing<TEvent>
-    {
-        public Filter(string query)
+        public LogTimer(string message, Logger log)
         {
-            Query = query;
-            var session = new ScriptEngine().CreateSession();
-            session.AddReference(typeof(TEvent).Assembly);
-            try
-            {
-            }
-            catch { }
-
+            this.message = message;
+            this.log = log;
         }
 
-        public override Func<IObservable<TEvent>, IObservable<TEvent>> GetAction()
+        public void Dispose()
         {
-            
-
-            return i => i.Where(@event => @event != null);
+            var ellapsed = (DateTime.UtcNow - start).TotalMilliseconds;
+            log.Info("T: {0} Took: {1} ms", message, ellapsed);    
         }
     }
 }
