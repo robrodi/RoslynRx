@@ -3,6 +3,10 @@ using System.Reactive.Linq;
 
 namespace RoslynRx
 {
+    /// <summary>
+    /// Basically an aggregator generator.
+    /// </summary>
+    /// <typeparam name="TEvent"></typeparam>
     public class Aggregate<TEvent> : Predicate<TEvent>
     {
         private Func<IObservable<TEvent>, IObservable<TEvent>> result;
