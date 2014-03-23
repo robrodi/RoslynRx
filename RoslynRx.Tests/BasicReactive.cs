@@ -52,5 +52,11 @@ namespace RoslynRx.Tests
             testInterval.Start();
             max.Should().Be(1770);
         }
+
+        [TestMethod]
+        public void GroupBy_Count()
+        {
+            Assert.Fail();
+        }
     }
 }

@@ -82,6 +82,7 @@
     <Compile Include="Predicate.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QueryState.cs" />
+    <Compile Include="Scan.cs" />
     <Compile Include="ThingExension.cs" />
   </ItemGroup>
   <ItemGroup>

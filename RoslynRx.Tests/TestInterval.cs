@@ -8,19 +8,19 @@ namespace RoslynRx.Tests
     {
         public int ExpectedCount;
         public int NumberOfTypes;
-        private TestScheduler scheduler;
+        public TestScheduler Scheduler;
         
         public TestInterval(int expectedCount = 60, int numberOfTypes = 2)
         {
-            scheduler = new TestScheduler();
-            this.Interval = CreateTestSchedulerInterval(expectedCount, numberOfTypes, scheduler);
+            Scheduler = new TestScheduler();
+            this.Interval = CreateTestSchedulerInterval(expectedCount, numberOfTypes, Scheduler);
             ExpectedCount = expectedCount;
             NumberOfTypes = numberOfTypes;
         }
 
         public void Start()
         {
-            scheduler.Start();
+            Scheduler.Start();
         }
 
         private static IObservable<Event<long>> CreateTestSchedulerInterval(int numberOfEvents, int numberOfTypes, TestScheduler scheduler)
