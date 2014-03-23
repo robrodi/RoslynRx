@@ -7,6 +7,7 @@ namespace RoslynRx
     /// Basically an aggregator generator.
     /// </summary>
     /// <typeparam name="TEvent"></typeparam>
+    [Obsolete("Doesn't work great on hot observables, as it waits until the end.  Use scan instaed")]
     public class Aggregate<TEvent> : Predicate<TEvent>
     {
         private Func<IObservable<TEvent>, IObservable<TEvent>> result;
