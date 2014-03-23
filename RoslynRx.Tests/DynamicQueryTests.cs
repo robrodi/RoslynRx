@@ -41,6 +41,7 @@ namespace RoslynRx.Tests
             var summer = new Aggregate<Event<long>>("(sum, @event) => new RoslynRx.Tests.Event<long>(0, sum.Data + @event.Data)");
             var testInterval = new TestInterval();
             long sum = long.MinValue;
+
             testInterval.Interval.DoThing(summer).Subscribe(i => sum = i.Data);
             testInterval.Start();
             sum.Should().Be(1770);
