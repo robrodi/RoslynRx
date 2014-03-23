@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Reactive.Linq;
 using Roslyn.Scripting.CSharp;
 
-namespace RoslynRx.Tests
+namespace RoslynRx
 {
     public class QueryState<T>
     {
@@ -35,8 +35,8 @@ namespace RoslynRx.Tests
             session.AddReference(typeof(TEvent).Assembly);
             try
             {
-                session.Execute()
             }
+            catch { }
 
         }
 

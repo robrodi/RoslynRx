@@ -3,6 +3,7 @@ using System.Reactive.Linq;
 using FluentAssertions;
 using Microsoft.Reactive.Testing;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Roslyn.Scripting;
 using Roslyn.Scripting.CSharp;
 
 namespace RoslynRx.Tests
@@ -25,8 +26,7 @@ namespace RoslynRx.Tests
 
             var query = new QueryState<EventBase>();
 
-            var session = new ScriptEngine().CreateSession(query);
-            session.AddReference(this.GetType().Assembly);
+            var session = ConfigureSession(query);
             session.Execute("Filters.Add(@event => @event.Type == 1);");
 
             int count = 0;
@@ -48,14 +48,21 @@ namespace RoslynRx.Tests
 
             var query = new QueryState<EventBase>();
 
-            var session = new ScriptEngine().CreateSession(query);
-            session.AddReference(this.GetType().Assembly);
+            var session = ConfigureSession(query);
             session.Execute("Filters.Add(@event => @event.Type == 1);");
 
             int count = 0;
             interval.WhereEach(query.Filters).Count().Subscribe(i => count = i);
             scheduler.Start();
             count.Should().Be(expectedCount / numberOfTypes);
+        }
+
+        private Session ConfigureSession(QueryState<EventBase> query)
+        {
+            var session = new ScriptEngine().CreateSession(query);
+            session.AddReference(GetType().Assembly);
+            session.AddReference(typeof (QueryState<EventBase>).Assembly);
+            return session;
         }
     }
 }

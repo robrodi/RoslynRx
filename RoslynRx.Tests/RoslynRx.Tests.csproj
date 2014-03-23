@@ -99,11 +99,16 @@
     <Compile Include="Event.cs" />
     <Compile Include="EventBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="QueryState.cs" />
     <Compile Include="RxEx.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\RoslynRx\RoslynRx.csproj">
+      <Project>{55e7bfa0-b322-42bc-b3ee-64c20be2beb6}</Project>
+      <Name>RoslynRx</Name>
+    </ProjectReference>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
