@@ -58,7 +58,7 @@ namespace RoslynRx
                 streams[key].OnNext(value);
             }
             else
-                Log.Debug("Uknown Key: {0}", key);
+                Log.Trace("Uknown Key: {0}", key);
         }
 
         public void OnError(Exception error)
