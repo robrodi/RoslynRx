@@ -38,21 +38,29 @@ Demuxing a stream into smaller streams:
 *   Allow output of different types (i.e. summing gives an integer, rather than an instance of the event).
 * Composition
 
-```csharp
-    var simpleObservable = Observable.Interval(TimeSpan.FromSeconds(1), scheduler)
-                .Take(someEvents)
-                .Select(i => new Event<long>((int)i % 12, i));    
-// Someday
+        ```csharp
+            var simpleObservable = Observable.Interval(TimeSpan.FromSeconds(1), scheduler)
+                        .Take(someEvents)
+                        .Select(i => new Event<long>((int)i % 12, i));    
+        // Someday
     
-    var query = @"
-        where("@event => @event.Data > 3")        
-        demux("@event => @event.Type", new[] { Type1, Type2, Type3 })
-        count()
-    ";
-    simpleObservable.Link(new Query(query)).Subscribe();
+            var query = @"
+                where("@event => @event.Data > 3")        
+                demux("@event => @event.Type", new[] { Type1, Type2, Type3 })
+                count()
+            ";
+            simpleObservable.Link(new Query(query)).Subscribe();
     
-    // yields
-    //  1: 20 received
-    //  2: 21 received
-    //  3: 22 received
-```
+            // yields
+            //  1: 20 received
+            //  2: 21 received
+            //  3: 22 received
+        ```
+
+* *Duck* typing
+
+    Gracefully handle missindg parameters and warn / error.
+
+* UI
+
+    That would probably be fun.
