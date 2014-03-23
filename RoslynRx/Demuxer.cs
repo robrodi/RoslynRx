@@ -17,9 +17,10 @@ namespace RoslynRx
 
         public Demuxer(IEnumerable<TKey> keys, string query)
         {
-            subjects = keys.ToDictionary(key => key, key => new Subject<TEvent>());
+            TKey[] array = keys.ToArray();
+            subjects = array.ToDictionary(key => key, key => new Subject<TEvent>());
             Streams = subjects.ToDictionary(entry => entry.Key, entry => (IObservable<TEvent>) entry.Value);
-            KnownKeys = keys;
+            KnownKeys = array;
 
             var session = Predicate<TEvent>.CreateSession();
 
@@ -57,7 +58,7 @@ namespace RoslynRx
 
         public void OnError(Exception error)
         {
-            throw new NotImplementedException();
+            Log.LogException(LogLevel.Fatal, "Exception encountered", error);
         }
 
         public void OnCompleted()
