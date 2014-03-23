@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reactive.Linq;
+using System.Reactive.Subjects;
 using FluentAssertions;
 using Microsoft.Reactive.Testing;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -56,7 +57,24 @@ namespace RoslynRx.Tests
         [TestMethod]
         public void GroupBy_Count()
         {
-            Assert.Fail();
+            var testInterval = new TestInterval();
+            testInterval.Interval.GroupBy(@event => @event.Type).Subscribe(x =>
+            {
+                int count = 0;
+                x.Subscribe(_ => Console.WriteLine("-> {0} : {1}", x.Key.ToString().PadLeft(3), (++count).ToString().PadLeft(3)));
+            });
+
+            testInterval.Start();
+        }
+
+        [TestMethod]
+        public void Ding()
+        {
+            var testInterval = new TestInterval();
+            long ding = long.MinValue;
+            testInterval.Interval.SkipWhile(@event => @event.Data < 30).Take(1).Subscribe(@e => ding = @e.Data);
+            testInterval.Start();
+            ding.Should().Be(30);
         }
     }
 }

@@ -29,6 +29,7 @@ namespace RoslynRx.Tests
             var testInterval = new TestInterval();
 
             int count = 0;
+            
             testInterval.Interval.DoThing(filter).Count().Subscribe(i => count = i);
             testInterval.Start();
             count.Should().Be(testInterval.ExpectedCount / testInterval.NumberOfTypes);
