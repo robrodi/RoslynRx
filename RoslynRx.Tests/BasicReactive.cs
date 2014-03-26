@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using FluentAssertions;
@@ -21,6 +22,19 @@ namespace RoslynRx.Tests
             interval.Subscribe(actualValues.Add);
             scheduler.Start();
             CollectionAssert.AreEqual(expectedValues, actualValues);
+        }
+
+        [TestMethod]
+        public void BufferABunch()
+        {
+            int count = 0;
+            int numEvents = 1000000;
+            Enumerable.Repeat(new Event<long>(1, 1L), numEvents).ToObservable().Buffer(new TimeSpan(0,0,0, 0, 1)).Subscribe(e =>
+            {
+                count += e.Count;
+                Console.WriteLine(count);
+            });
+            count.Should().Be(numEvents);
         }
 
         [TestMethod]

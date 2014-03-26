@@ -26,8 +26,10 @@ namespace RoslynRx.Tests
 
     public class Megalo<TEvent>
     {
+        public Dictionary<string, object> State { get; private set; }
         public Megalo(params KeyValuePair<string, IObservable<TEvent>>[] streams)
         {
+            State = new Dictionary<string, object>();
             foreach (var stream in streams)
             {
                 this.streams.Add(stream.Key, (IObservable<Event<long>>) stream.Value);
