@@ -45,8 +45,8 @@ Demuxing a stream into smaller streams:
     // Someday
     
     var query = @"
-        where("@event => @event.Data > 3")        
-        demux("@event => @event.Type", new[] { Type1, Type2, Type3 })
+        where(\"@event => @event.Data > 3\")        
+        demux(\"@event => @event.Type\", new[] { Type1, Type2, Type3 })
         count()
     ";
     simpleObservable.Link(new Query(query)).Subscribe();
